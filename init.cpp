@@ -42,6 +42,10 @@ int main( int argc, char *argv[] )
                 if ( e.type == SDL_QUIT ) { run = false; }
                 if ( !window.handleEvent( e ) ) { run = false; }
             }
+            window.drawSprite(
+                window.fetchSprite(0),
+                20, 20
+            );
             window.render();
         }
     }
@@ -80,7 +84,6 @@ void loadGraphics()
     for ( int i = 0; i < PATHS::total; i++ )
     {
         int id = window.loadSprite( IMAGEPATHS[i] );
-        //if ( !window.fetchSprite( id ).addFrame( "player2.png" ) ) { printf( "Error" ); }
     }
 }
 

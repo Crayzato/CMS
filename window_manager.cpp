@@ -16,55 +16,27 @@ Sprite::Sprite( Window& _w, std::string _path )
     bool success = true;
 
     std::string p = "images\\" + _path;
-    SDL_Texture* tempImg = NULL;
+    img = NULL;
 
     ID = pWindow.getSpriteCount();
 
-    totalFrames = 1;
-    currFrame = 0;
-
     SDL_Surface* loadedSurface = IMG_Load( p.c_str() );
     if ( loadedSurface == NULL ) { success = false; }
     else
     {
-        tempImg = SDL_CreateTextureFromSurface( pWindow.getRenderer(), loadedSurface );
-        if( tempImg == NULL ) { success = false; }
+        img = SDL_CreateTextureFromSurface( pWindow.getRenderer(), loadedSurface );
+        if( img == NULL ) { success = false; }
         SDL_FreeSurface( loadedSurface );
-        img.emplace_back( tempImg );
     }
 }
 
-bool Sprite::addFrame( std::string _path )
-{
-    bool success = true;
-
-    std::string p = "images\\" + _path;
-    SDL_Texture* tempImg = NULL;
-
-    SDL_Surface* loadedSurface = IMG_Load( p.c_str() );
-    if ( loadedSurface == NULL ) { success = false; }
-    else
-    {
-        tempImg = SDL_CreateTextureFromSurface( pWindow.getRenderer(), loadedSurface );
-        if( tempImg == NULL ) { success = false; }
-        SDL_FreeSurface( loadedSurface );
-        img.emplace_back( tempImg );
-    }
-    totalFrames ++;
-
-    return success;
+void Sprite::render( SDL_Rect _destRect ) {
+    SDL_RenderCopy( pWindow.getRenderer(), img, NULL, &_destRect );
 }
 
-void Sprite::render( SDL_Rect _destRect, int frame ) {
-    if ( frame == -1 ) { currFrame = ( currFrame + 1 >= totalFrames ) ? 0 : currFrame + 1; }
-    else { currFrame = frame; }
-    SDL_RenderCopy( pWindow.getRenderer(), img[currFrame], NULL, &_destRect );
-}
-
-SDL_Texture* Sprite::fetchText( int frame )
+SDL_Texture* Sprite::fetchText()
 {
-    if ( frame >= 0 ) { return img[frame]; }
-    else { return img[currFrame]; }
+    return img;
 }
 
 int Sprite::getID()
@@ -74,11 +46,8 @@ int Sprite::getID()
 
 void Sprite::free()
 {
-    for ( int i = 0; i < totalFrames; i++ )
-    {
-        SDL_DestroyTexture( img[i] );
-        img[i] = NULL;
-    }
+    SDL_DestroyTexture( img );
+    img = NULL;
 }
 
 

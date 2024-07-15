@@ -12,9 +12,7 @@ namespace wm
     class Sprite 
     {
         private:
-            std::vector<SDL_Texture*> img;
-            int totalFrames;
-            int currFrame;
+            SDL_Texture* img;
 
             Window &pWindow;
 
@@ -25,9 +23,9 @@ namespace wm
 
             bool addFrame( std::string _path );
 
-            void render( SDL_Rect _destRect, int frame = -1 );
+            void render( SDL_Rect _destRect);
 
-            SDL_Texture* fetchText( int frame = -1 );
+            SDL_Texture* fetchText();
 
             int getID();
 
