@@ -51,6 +51,65 @@ void Sprite::free()
 }
 
 
+// Animation
+Animation::Animation( Window& _w )
+:pWindow{_w}{
+    frameCount = 0;
+    frameNumber = 0;
+
+    ID = pWindow.getAnimationCount();
+}
+
+int Animation::getID()
+{
+    return ID;
+}
+
+void Animation::addframes( int _frame )
+{
+    frames.emplace_back( _frame );
+    frameCount = frames.size();
+}
+
+void Animation::addframes( std::vector<int> _frame )
+{
+    frames.insert(frames.end(), _frame.begin(), _frame.end());
+    frameCount = frames.size();
+}
+
+void Animation::addframes( int _frame[], int _frameCount )
+{
+    for ( int i = 0; i < _frameCount; i++ )
+    {
+        frames.emplace_back( _frame[i] );
+    }
+    frameCount = frames.size();
+}
+
+void Animation::renderNext( int _x, int _y, int _xscale, int _yscale )
+{
+    if ( frames.size() > 0 ) {
+        frameNumber++;
+        if ( frameNumber >= frames.size() ) { frameNumber = 0; }
+        Sprite rFrame = pWindow.fetchSprite( frames.at(frameNumber) );
+        pWindow.drawSprite( rFrame, _x, _y, _xscale, _yscale );
+    }
+}
+
+void Animation::renderCurrent( int _x, int _y, int _xscale, int _yscale )
+{
+    if ( frameNumber < frames.size() ) {
+        Sprite rFrame = pWindow.fetchSprite( frames.at(frameNumber) );
+        pWindow.drawSprite( rFrame, _x, _y, _xscale, _yscale );
+    }
+}
+
+void Animation::renderSelect( int _frame, int _x, int _y, int _xscale, int _yscale )
+{
+    Sprite rFrame = pWindow.fetchSprite( frames.at(_frame) );
+    pWindow.drawSprite( rFrame, _x, _y, _xscale, _yscale );
+}
+
 // Window
 Window::Window()
 {
@@ -58,6 +117,7 @@ Window::Window()
     renderer = NULL;
 
     spriteCount = 0;
+    animCount = 0;
 
     w = 0;
     h = 0;
@@ -140,6 +200,25 @@ int Window::getSpriteCount()
 Sprite Window::fetchSprite( int _id )
 {
     return loadedSprites.at(_id);
+}
+
+int Window::createAnimation()
+{
+    Animation anim( *this );
+    loadedAnims.emplace_back( anim );
+    animCount ++;
+    return anim.getID();
+}
+
+int Window::getAnimationCount()
+{
+    return animCount;
+}
+
+Animation Window::fetchAnimation( int _id )
+{
+    Animation ret = loadedAnims.at( _id );
+    return ret;
 }
 
 void Window::drawSprite( Sprite _spr, int _x, int _y, int _xscale, int _yscale )

@@ -19,7 +19,8 @@ const int SC_W = 640;
 const int SC_H = 384;
 
 const std::string IMAGEPATHS[] = {
-    "player.png"
+    "player.png",
+    "player2.png"
 };
 
 enum PATHS {
@@ -29,6 +30,8 @@ enum PATHS {
 
 // Global Variables
 wm::Window window;
+
+int testAnim;
 
 int main( int argc, char *argv[] )
 {
@@ -46,6 +49,7 @@ int main( int argc, char *argv[] )
                 window.fetchSprite(0),
                 20, 20
             );
+            window.fetchAnimation( testAnim ).renderNext( 50, 20 );
             window.render();
         }
     }
@@ -74,6 +78,8 @@ bool init()
                 success = false;
             }
             loadGraphics();
+            testAnim = window.createAnimation();
+            window.fetchAnimation( testAnim ).addframes( 0 );
         }
     }
     return success;
