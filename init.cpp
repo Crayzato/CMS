@@ -49,7 +49,6 @@ int main( int argc, char *argv[] )
                 window.fetchSprite(0),
                 20, 20
             );
-            window.fetchAnimation( testAnim ).renderNext( 50, 20 );
             window.render();
         }
     }
@@ -79,8 +78,6 @@ bool init()
                 success = false;
             }
             loadGraphics();
-            testAnim = window.createAnimation();
-            window.fetchAnimation( testAnim ).addframes( 0 );
         }
     }
     return success;

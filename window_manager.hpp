@@ -22,8 +22,6 @@ namespace wm
         public:
             Sprite( Window &_w, std::string _path );
 
-            void render( SDL_Rect _destRectn);
-
             void render( SDL_Rect _destRect);
 
             SDL_Texture* fetchText();
@@ -31,31 +29,6 @@ namespace wm
             int getID();
 
             void free();
-    };
-
-    class Animation
-    {
-        private:
-            Window &pWindow;
-            
-            int frameCount;
-            int frameNumber;
-            std::vector<int> frames;
-
-            int ID;
-
-        public:
-            Animation( Window &_w );
-
-            int getID();
-
-            void addframes( int _frame );
-            void addframes( std::vector<int> _frame );
-            void addframes( int _frame[], int frameCount );
-
-            void renderNext( int _x, int _y, int _xscale = 1, int _yscale = 1 );
-            void renderCurrent( int _x, int _y, int _xscale = 1, int _yscale = 1 );
-            void renderSelect( int _frame, int _x, int _y, int _xscale = 1, int _yscale = 1 );
     };
 
     class Window 
@@ -75,8 +48,6 @@ namespace wm
             std::vector<std::pair<Sprite*, SDL_Rect>> renderPipeline;
             std::vector<Sprite> loadedSprites;
             int spriteCount;
-            std::vector<Animation> loadedAnims;
-            int animCount;
 
         public:
             Window();
@@ -90,10 +61,6 @@ namespace wm
             int loadSprite( std::string _path );
             int getSpriteCount();
             Sprite fetchSprite( int _id );
-
-            int createAnimation();
-            int getAnimationCount();
-            Animation fetchAnimation( int _id );
 
             void render();
 

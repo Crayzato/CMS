@@ -52,12 +52,6 @@ void Sprite::free()
     img = NULL;
 }
 
-void Animation::renderSelect( int _frame, int _x, int _y, int _xscale, int _yscale )
-{
-    Sprite rFrame = pWindow.fetchSprite( frames.at(_frame) );
-    pWindow.drawSprite( rFrame, _x, _y, _xscale, _yscale );
-}
-
 // Window
 Window::Window()
 {
@@ -65,7 +59,6 @@ Window::Window()
     renderer = NULL;
 
     spriteCount = 0;
-    animCount = 0;
 
     w = 0;
     h = 0;
@@ -148,25 +141,6 @@ int Window::getSpriteCount()
 Sprite Window::fetchSprite( int _id )
 {
     return loadedSprites.at(_id);
-}
-
-int Window::createAnimation()
-{
-    Animation anim( *this );
-    loadedAnims.emplace_back( anim );
-    animCount ++;
-    return anim.getID();
-}
-
-int Window::getAnimationCount()
-{
-    return animCount;
-}
-
-Animation Window::fetchAnimation( int _id )
-{
-    Animation ret = loadedAnims.at( _id );
-    return ret;
 }
 
 void Window::drawSprite( Sprite _spr, int _x, int _y, int _xscale, int _yscale )
