@@ -52,6 +52,7 @@ int main( int argc, char *argv[] )
 // Function Definitions
 bool init()
 {
+    printf( "initialising application" );
     bool success = true;
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
@@ -80,7 +81,6 @@ void loadGraphics()
     for ( int i = 0; i < PATHS::total; i++ )
     {
         int id = window.loadSprite( IMAGEPATHS[i] );
-        //if ( !window.fetchSprite( id ).addFrame( "player2.png" ) ) { printf( "Error" ); }
     }
 }
 
