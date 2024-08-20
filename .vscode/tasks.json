@@ -9,6 +9,7 @@
                 "-g",
                 "init.cpp",
                 "window_manager.cpp",
+                "terminal_input.cpp",
                 "data.cpp",
                 "-lmingw32",
                 "-I",

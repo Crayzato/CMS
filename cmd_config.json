@@ -1,0 +1,20 @@
+{
+    "cmds_c" : 3,
+    "cmds" : [
+        {
+            "name" : "create",
+            "term" : "[Create|create|New|new]",
+            "arg_c" : 1
+        },
+        {
+            "name" : "name",
+            "term" : "[Name|name|AddName|addname|addName|Addname]",
+            "arg_c" : 3
+        },
+        {
+            "name" : "close",
+            "term" : "[Close|close|Exit|exit]",
+            "arg_c" : 0
+        }
+    ]
+}

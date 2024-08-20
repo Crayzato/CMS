@@ -7,6 +7,7 @@
 #include "iostream"
 
 #include "window_manager.hpp"
+#include "terminal_input.hpp"
 #include "data.hpp"
 
 // Function Declarations
@@ -31,10 +32,18 @@ enum PATHS {
 // Global Variables
 wm::Window window;
 
-int testAnim;
+data::Bin bin("data.json");
+term::TerminalStart start(bin);
 
 int main( int argc, char *argv[] )
 {
+    bool run = true;
+    while ( run ) {
+        start.getcmd();
+        if ( start.performAction() == -1 ) { run = false; }
+    }
+    bin.close();
+    /*
     if ( init() )
     {
         SDL_Event e;
@@ -45,15 +54,12 @@ int main( int argc, char *argv[] )
                 if ( e.type == SDL_QUIT ) { run = false; }
                 if ( !window.handleEvent( e ) ) { run = false; }
             }
-            window.drawSprite(
-                window.fetchSprite(0),
-                20, 20
-            );
             window.render();
         }
     }
     close();
-    return 0;
+    */
+   return 0;
 }
 
 // Function Definitions
